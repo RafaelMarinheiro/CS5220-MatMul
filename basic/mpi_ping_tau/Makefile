@@ -1,5 +1,5 @@
 CC=tau_cc.sh 
-CFLAGS=-O2 -optMpi 
+CFLAGS=-O2 -optMpi -std=gnu99 -Wall
 
 .PHONY: run clean test
 
@@ -13,7 +13,7 @@ pack: profile.0.0.0
 	paraprof --pack ping.ppk
 
 ping.x: ping.c
-	$(CC) -std=gnu99 -Wall $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	rm -f ping.x ping.o mpisub* profile* 
