@@ -8,3 +8,5 @@ at MIT, evolved into a company (Cilk Arts), and then was purchased by Intel.
 
 You must have the `icsxe` (Intel Composer Studio XE) module loaded to
 build and run this example.
+
+The `fib.cpp` example was downloaded from the Cilk Plus web page.
