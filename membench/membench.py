@@ -15,7 +15,7 @@ def size_name(s):
 # Load data from timings.csv and plot it, grouping by size
 df = pd.read_csv("timings.csv")
 for key, grp in df.groupby("size"):
-    plt.semilogx(grp['stride'], grp['ns'], label=size_name(key))
+    plt.semilogx(grp['stride'], grp['ns'], label=size_name(key), basex=2)
 lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 plt.xlabel('Stride (bytes)')
 plt.ylabel('Time (ns)')
