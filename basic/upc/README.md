@@ -8,5 +8,5 @@ Monte Carlo calculation of pi.  The usage is simply
 
 As it is currently set up, running `make` will build the program and
 launch it on the cluster with upcrun.  You *must* load the `upc`
-module before running `make`!
-
+module before running `make`! Note that the program will also not compile
+if the `icsxe` module is loaded.
