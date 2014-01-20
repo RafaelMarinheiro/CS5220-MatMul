@@ -38,8 +38,17 @@ dgemm_blas.o: dgemm_blas.c
 # ---
 # Rules for building timing CSV outputs
 
-timing-%.csv: matmul-%
+.PHONY: run run-c4
+run-c4: info-mine.out info-basic.out info-blocked.out \
+	info-f2c.out info-blas.out
+run:    timing-mine.csv timing-basic.csv timing-blocked.csv \
+	timing-f2c.csv timing-blas.csv
+
+info-%.out: matmul-%
 	csub ./runner.sh ./$< $*
+
+timing-%.csv: matmul-%
+	./matmul-%
 
 # ---
 
