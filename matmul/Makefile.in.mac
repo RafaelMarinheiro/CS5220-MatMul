@@ -4,7 +4,7 @@ FC=gfortran-mp-4.8
 
 # Compiler optimization flags.  You will definitely want to play with these!
 OPTFLAGS = -O3 
-CFLAGS = $(OPTFLAGS) -std=c99 -fopenmp
+CFLAGS = $(OPTFLAGS) -std=gnu99 -fopenmp
 FFLAGS = $(OPTFLAGS)
 LDFLAGS = -fopenmp
 
