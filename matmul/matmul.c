@@ -145,8 +145,8 @@ double time_dgemm(const int M, const double *A, const double *B, double *C)
             square_dgemm(M, A, B, C);
         }
         double finish = omp_get_wtime();
-        double secs = finish-start;
         double mflops = 2.0 * num_iterations * M * M * M / 1.0e6;
+        secs = finish-start;
         mflops_sec = mflops / secs;
         num_iterations *= 2;
     }
