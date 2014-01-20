@@ -48,7 +48,7 @@ info-%.out: matmul-%
 	csub ./runner.sh ./$< $*
 
 timing-%.csv: matmul-%
-	./matmul-%
+	./$<
 
 # ---
 
