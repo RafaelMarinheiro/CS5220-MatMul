@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def make_plot(runs):
     "Plot results of timing trials"
-    for arg runs
+    for arg in runs:
         df = pd.read_csv("timing-{0}.csv".format(arg))
         plt.plot(df['size'], df['mflop'], label=arg)
     plt.xlabel('Dimension')
@@ -25,5 +25,5 @@ def main(runs):
     lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     plt.savefig('timing.pdf', bbox_extra_artists=(lgd,), bbox_inches='tight')
 
-if __name__="__main__":
+if __name__ == "__main__":
     main(sys.argv[1:])

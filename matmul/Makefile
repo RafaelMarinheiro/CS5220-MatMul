@@ -5,9 +5,7 @@
 # to play with, you can put them in an appropriately-named Makefile.in.
 # For example, the default setup has a Makefile.in.icc and Makefile.in.gcc.
 
-ifndef PLATFORM
-include Makefile.in
-else
+ifdef PLATFORM
 include Makefile.in.$(PLATFORM)
 endif
 
@@ -20,8 +18,11 @@ all:	matmul-mine matmul-basic matmul-blocked matmul-blas matmul-f2c
 matmul-%: $(OBJS) dgemm_%.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
-matmul-f2c:    $(OBJS) dgemm_f2c.o fdgemm.o
+matmul-f2c: $(OBJS) dgemm_f2c.o fdgemm.o
 	$(FC) -o $@ $^ $(LDFLAGS) $(LIBS) 
+
+matmul-blas: $(OBJS) dgemm_blas.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) $(LIBBLAS)
 
 # --
 # Rules to build object files
