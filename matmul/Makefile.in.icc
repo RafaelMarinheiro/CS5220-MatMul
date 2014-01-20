@@ -4,7 +4,7 @@ FC=ifort
 
 # Compiler optimization flags.  You will definitely want to play with these!
 OPTFLAGS = -O3
-CFLAGS = $(OPTFLAGS) -std=c99 -fopenmp
+CFLAGS = $(OPTFLAGS) -std=gnu99 
 FFLAGS = $(OPTFLAGS)
 LDFLAGS = -fopenmp -nofor-main
 
