@@ -19,7 +19,7 @@ The main files are:
 * `README.md`: This file
 * `Makefile`: The build rules
 * `Makefile.in.*`: Platform-specific flag and library specs used in the Makefile
-* `dgemm_*.c`: Different modules implementing the `square_dgemm` routine
+* `dgemm_*`: Different modules implementing the `square_dgemm` routine
 * `fdgemm.f`: Reference Fortran `dgemm` from Netlib (c.f. `dgemm_f2c`)
 * `matmul.c`: Driver script for testing and timing `square_dgemm` versions
 * `plotter.py`: Python script for drawing performance plots
@@ -110,6 +110,35 @@ On OS X, the Makefile is configured to link against the Accelerate framework.
 If you are using a different version of OS X, you may have to fiddle a little
 with the compiler macros in order to get this to work.  In particular, the
 `cblas.h` file at one point was not a part of the framework.
+
+### Notes on mixed C-Fortran programming
+
+The reference implementation includes three files for calling a
+Fortran `dgemm` from the C driver:
+
+* `dgemm_f2c.f`: An interface file for converting from C to Fortran conventions
+* `dgemm_f2c_desc.c`: A stub file defining the global `dgemm_desc` variable
+  used by the driver
+* `fdgemm.f`: The Fortran `dgemm` routine taken from the Netlib reference BLAS
+
+The "old-school" way of mixing Fortran and C involve figuring out how
+types map between the two languages and how the compiler does name
+mangling.  It's feasible, but a pain to maintain.  If you want, you
+can find many examples of this approach to mixed language programming
+online, including in the sources for old versions of this assignment.
+But it has now been over a decade since the Fortran 2003 standard,
+which includes explicit support for C-Fortran interoperability.  So
+we're going this route, using the `iso_c_binding` module in
+`dgemm_f2c.f` to wrap a Fortran implementation of `dgemm` from the
+reference BLAS.
+
+Apart from knowing how to create a "glue" layer with something like
+`iso_c_binding`, one of the main things to understand if trying to mix
+Fortran and C++ is that Fortran has its own set of required support
+libraries and its own way of handling the `main` routine.  If you want
+to link C with Fortran, the easiest way to do so is usually to compile
+the individual modules with C or Fortran compilers as appropriate, then
+use the Fortran compiler for linking everything together.
 
 ## Running the code
 
