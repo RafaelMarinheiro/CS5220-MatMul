@@ -39,7 +39,7 @@ dgemm_blas.o: dgemm_blas.c
 # Rules for building timing CSV outputs
 
 timing-%.csv: matmul-%
-	csub ./runner.sh $< $*
+	csub ./runner.sh ./$< $*
 
 # ---
 
