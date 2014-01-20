@@ -150,6 +150,7 @@ double time_dgemm(const int M, const double *A, const double *B, double *C)
         mflops_sec = mflops / secs;
         num_iterations *= 2;
     }
+    return mflops_sec;
 }
 
 
