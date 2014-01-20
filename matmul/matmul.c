@@ -153,12 +153,25 @@ double time_dgemm(const int M, const double *A, const double *B, double *C)
 
 int main(int argc, char** argv)
 {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: matmul csv\n");
+    if (argc > 2) {
+        fprintf(stderr, "Usage: matmul [csv]\n");
         exit(2);
     }
     
-    FILE* fp = fopen(argv[1], "w");
+    FILE* fp;
+    if (argc == 1) {
+        const char* exename = argv[0];
+        const char* s = exename + strlen(exename);
+        for (; s != exename && *s != '-' && *s != '/'; --s);
+        char* fname = (char*) malloc(strlen(s) + strlen("timing.csv"));
+        strcpy(fname, "timing");
+        strcat(fname, s);
+        strcat(fname, ".csv");
+        fp = fopen(fname, "w");
+        free(fname);
+    } else 
+        fp = fopen(argv[1], "w");
+    
     if (!fp) {
         fprintf(stderr, "Could not open '%s' for output\n", argv[1]);
         exit(3);
