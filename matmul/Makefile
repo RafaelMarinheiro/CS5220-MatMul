@@ -5,9 +5,8 @@
 # to play with, you can put them in an appropriately-named Makefile.in.
 # For example, the default setup has a Makefile.in.icc and Makefile.in.gcc.
 
-ifdef PLATFORM
+PLATFORM=gcc
 include Makefile.in.$(PLATFORM)
-endif
 
 .PHONY:	all
 all:	matmul-mine matmul-basic matmul-blocked matmul-blas matmul-f2c
