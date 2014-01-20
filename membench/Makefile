@@ -4,6 +4,7 @@
 CC = gcc
 CFLAGS = -std=c99 -O2 -fopenmp
 LIBS = -lrt
+PYTHON = /share/cs-instructional/cs5220/local/anaconda/bin/python
 
 .PHONY: run clean clean-all
 
@@ -11,7 +12,7 @@ membench: membench.c
 	$(CC) $(CFLAGS) -o membench membench.c 
 
 membench.pdf: membench.py timings.csv
-	./membench.py
+	$(PYTHON) ./membench.py
 
 run: membench
 	csub ./membench timings.csv
