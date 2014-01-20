@@ -136,6 +136,7 @@ void validate_dgemm(const int M, const double *A, const double *B, double *C)
 double time_dgemm(const int M, const double *A, const double *B, double *C)
 {
     double secs = -1.0;
+    double mflops_sec;
     int num_iterations = MIN_RUNS;
     while (secs < MIN_SECS) {
         matrix_clear(C);
@@ -143,11 +144,12 @@ double time_dgemm(const int M, const double *A, const double *B, double *C)
         for (int i = 0; i < num_iterations; ++i) {
             square_dgemm(M, A, B, C);
         }
-        secs = omp_get_wtime()-start;
+        double finish = omp_get_wtime();
+        double secs = finish-start;
+        double mflops = 2.0 * num_iterations * M * M * M / 1.0e6;
+        mflops_sec = mflops / secs;
         num_iterations *= 2;
     }
-    double mflops = 2.0 * num_iterations * M * M * M / 1.0e6;
-    return mflops/secs;
 }
 
 
