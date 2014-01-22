@@ -1,0 +1,3 @@
+#!/bin/sh
+cat /proc/cpuinfo > cpuinfo.out
+lstopo --output-format txt --no-io > lstopo.out
