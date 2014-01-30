@@ -10,10 +10,13 @@ lec01.pdf: lec01.tex lec01plot.dat
 lec01plot.dat: lec01plot.py
 	python lec01plot.py
 
-lec03.pdf: lec03.tex lec03membench.pdf
+lec03.pdf: lec03.tex lec03membench.pdf lec03membench2.pdf
 
 lec03membench.pdf: lec03membench.py lec03membench.csv
 	python lec03membench.py lec03membench
+
+lec03membench2.pdf: lec03membench2.py lec03membench.csv
+	python lec03membench2.py lec03membench
 
 %.pdf: %.tex 
 	pdflatex $<
