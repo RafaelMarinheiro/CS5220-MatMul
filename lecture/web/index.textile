@@ -11,7 +11,7 @@ table(table).
 {background:#ccc}.|_. Lecture |_. Date |_. Info |
 |1       |  1/23  | "Intro to CS 5220":lectures/lec01.pdf |
 {background:#eee}.|2       |  1/28  | "Getting started on C4":lectures/lec02.pdf |
-{background:#eee}.|3       |  1/30  | Computer architecture basics  |
+{background:#eee}.|3       |  1/30  | "Computer architecture basics":lectures/lec03.pdf  |
 |4       |  2/4   |                               |
 |5       |  2/6   |                               |
 {background:#eee}.|6       |  2/11  |                               |
