@@ -1,0 +1,5 @@
+cs-instructional-0-19.local
+Compiler:	gcc
+Options:	-O3 
+Description:	Fortran dgemm.
+

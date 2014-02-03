@@ -1,0 +1,5 @@
+cs-instructional-0-22.local
+Compiler:	icc
+Options:	-O3
+Description:	Simple blocked dgemm.
+
