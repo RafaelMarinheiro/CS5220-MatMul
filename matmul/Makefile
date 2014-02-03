@@ -26,11 +26,14 @@ matmul-blas: $(OBJS) dgemm_blas.o
 # --
 # Rules to build object files
 
-%.o: %.c
+matmul.o: matmul.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
 
+%.o: %.c
+	$(CC) -c $(CFLAGS) $(OPTFLAGS) $(CPPFLAGS) $<
+
 %.o: %.f
-	$(FC) -c $(FFLAGS) $<
+	$(FC) -c $(FFLAGS) $(OPTFLAGS) $<
 
 dgemm_blas.o: dgemm_blas.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(INCBLAS) $< 
