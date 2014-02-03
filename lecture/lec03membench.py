@@ -13,12 +13,23 @@ def size_name(s):
     else:
         return "{0}K".format(ksize)
 
-# Load data from timings.csv and plot it, grouping by size
-df = pd.read_csv(sys.argv[1])
+# Load data from timings.csv
+df = pd.read_csv(sys.argv[1] + '.csv')
+
+# Plot data, grouping by size
 for key, grp in df.groupby("size"):
     plt.semilogx(grp['stride'], grp['ns'], label=size_name(key), basex=2)
 lgd = plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 plt.xlabel('Stride (bytes)')
 plt.ylabel('Time (ns)')
+
+# Add some system characteristics
+plt.semilogx([64,64], [0,25], basex=2, color='black')
+plt.semilogx([4096,4096], [0,25], basex=2, color='black')
+
+# Line size, page size
+plt.annotate('64B', xy=(64,24),   size='smaller')
+plt.annotate('4K', xy=(4096,24),  size='smaller')
+
 plt.savefig(sys.argv[1]+'.pdf', bbox_extra_artists=(lgd,), bbox_inches='tight')
 

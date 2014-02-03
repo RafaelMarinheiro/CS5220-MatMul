@@ -1,0 +1,41 @@
+---
+title:     Lectures
+course:    CS 5220
+base:      /class/cs5220-s14/
+nav:
+ - syllabus
+ - lectures
+---
+
+table(table).
+{background:#ccc}.|_. Lecture |_. Date |_. Info |
+|1       |  1/23  | "Intro to CS 5220":lectures/lec01.pdf |
+{background:#eee}.|2       |  1/28  | "Getting started on C4":lectures/lec02.pdf |
+{background:#eee}.|3       |  1/30  | "Computer architecture basics":lectures/lec03.pdf  |
+|4       |  2/4   |                               |
+|5       |  2/6   |                               |
+{background:#eee}.|6       |  2/11  |                               |
+{background:#eee}.|7       |  2/13  |                               |
+|        |  2/18  | **February Break**            |
+|8       |  2/20  |                               |
+{background:#eee}.|9       |  2/25  |                               |
+{background:#eee}.|10      |  2/27  |                               |
+|11      |  3/4   |                               |
+|12      |  3/6   |                               |
+{background:#eee}.|13      |  3/11  |                               |
+{background:#eee}.|14      |  3/13  |                               |
+|15      |  3/18  |                               |
+|16      |  3/20  |                               |
+{background:#eee}.|17      |  3/25  |                               |
+{background:#eee}.|18      |  3/27  |                               |
+|        |  4/1   | **Spring Break**              |
+|        |  4/3   | **Spring Break**              |
+{background:#eee}.|19      |  4/8   |                               |
+{background:#eee}.|20      |  4/10  |                               |
+|21      |  4/15  |                               |
+|22      |  4/17  |                               |
+{background:#eee}.|23      |  4/22  | Guest lecture                 |
+{background:#eee}.|24      |  4/24  | Guest lecture                 |
+|25      |  4/29  |                               |
+|26      |  5/1   |                               |
+{background:#eee}.|27      |  5/6   |                               |          

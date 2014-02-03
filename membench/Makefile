@@ -6,16 +6,21 @@ CFLAGS = -std=c99 -O2 -fopenmp
 LIBS = -lrt
 PYTHON = /share/cs-instructional/cs5220/local/anaconda/bin/python
 
-.PHONY: run clean clean-all
+.PHONY: membench pdf run runpinfo clean clean-all
 
 membench: membench.c
-	$(CC) $(CFLAGS) -o membench membench.c 
+	$(CC) $(CFLAGS) -o membench membench.c
 
-membench.pdf: membench.py timings.csv
-	$(PYTHON) ./membench.py
+pdf: timings-pac.pdf timings.pdf
+
+%.pdf: %.csv
+	$(PYTHON) ./membench.py $<
 
 run: membench
 	csub ./membench timings.csv
+
+runpinfo:
+	csub ./pinfo
 
 clean:
 	rm -f membench membench.eps membench.pdf
@@ -23,3 +28,4 @@ clean:
 
 clean-all: clean
 	rm -f timings.csv
+	rm -f *.out
