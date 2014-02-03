@@ -97,6 +97,55 @@ void matrix_clear(double *C)
  *  That last source of error is not so significant, but that's a
  *  story for another day.
  */
+void diff_dgemm(const int M, const double *A, const double *B, double *C)
+{
+    FILE* fp_our  = fopen("dump_our.txt", "w");
+    FILE* fp_ref  = fopen("dump_ref.txt", "w");
+    FILE* fp_diff = fopen("dump_diff.txt", "w");
+    matrix_clear(C);
+    square_dgemm(M, A, B, C);
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < M; ++j) {
+            double dotprod = 0;
+            double errorbound = 0;
+            for (int k = 0; k < M; ++k) {
+                double prod = A[k*M + i] * B[j*M + k];
+                dotprod += prod;
+                errorbound += fabs(prod);
+            }
+            fprintf(fp_our,  " %g", C[j*M+i]);
+            fprintf(fp_ref,  " %g", dotprod);
+            fprintf(fp_diff, " % 0.0e", C[j*M+i]-dotprod);
+        }
+        fprintf(fp_our, "\n");
+        fprintf(fp_ref, "\n");
+        fprintf(fp_diff, "\n");
+    }
+    fclose(fp_diff);
+    fclose(fp_ref);
+    fclose(fp_our);
+}
+
+/* --
+ * Check that C = A*B to within roundoff error.
+ *
+ * We use the fact that dot products satisfy the error bound
+ *
+ *   float(sum a_i * b_i) = sum a_i * b_i * (1 + delta_i)
+ *
+ * where delta_i <= n * epsilon.  In order to check your matrix
+ * multiply, we compute each element in turn and make sure that
+ * your product is within three times the given error bound.
+ * We make it three times because there are three sources of
+ * error:
+ *
+ *  - the roundoff error in your multiply
+ *  - the roundoff error in our multiply
+ *  - the roundoff error in computing the error bound
+ *
+ *  That last source of error is not so significant, but that's a
+ *  story for another day.
+ */
 void validate_dgemm(const int M, const double *A, const double *B, double *C)
 {
     matrix_clear(C);
@@ -119,6 +168,7 @@ void validate_dgemm(const int M, const double *A, const double *B, double *C)
                         dotprod, C[j*M + i]);
                 fprintf(stderr, "Error of %lg, acceptable limit %lg\n",
                         err, 3*errorbound);
+                diff_dgemm(M, A, B, C);
                 exit(-1);
             }
         }
@@ -166,7 +216,7 @@ int main(int argc, char** argv)
         const char* exename = argv[0];
         const char* s = exename + strlen(exename);
         for (; s != exename && *s != '-' && *s != '/'; --s);
-        char* fname = (char*) malloc(strlen(s) + strlen("timing.csv"));
+        char* fname = (char*) malloc(strlen(s) + strlen("timing.csv") + 1);
         strcpy(fname, "timing");
         strcat(fname, s);
         strcat(fname, ".csv");
