@@ -1,0 +1,30 @@
+\begin{tikzpicture}[y=-1cm]
+
+% objects at depth 50:
+\draw[black] (2.06375,1.27) -- (1.905,1.27) -- (1.905,4.445) -- (2.06375,4.445);
+\draw[black] (4.92125,1.27) -- (5.08,1.27) -- (5.08,4.445) -- (4.92125,4.445);
+\draw[arrows=triangle 45-triangle 45,black] (7.46125,2.2225) -- (8.255,2.2225);
+\draw[arrows=triangle 45-triangle 45,black] (8.73125,2.2225) -- (9.525,2.2225);
+\draw[arrows=triangle 45-triangle 45,black] (11.27125,2.2225) -- (12.065,2.2225);
+\draw[arrows=triangle 45-triangle 45,black] (10.00125,2.2225) -- (10.795,2.2225);
+\path (2.06375,2.54) node[text=black,anchor=base west] {\large{}*};
+\path (2.69875,2.54) node[text=black,anchor=base west] {\large{}*};
+\path (3.33375,2.54) node[text=black,anchor=base west] {\large{}*};
+\path (2.69875,3.175) node[text=black,anchor=base west] {\large{}*};
+\path (3.33375,3.175) node[text=black,anchor=base west] {\large{}*};
+\path (3.96875,3.175) node[text=black,anchor=base west] {\large{}*};
+\path (3.33375,3.81) node[text=black,anchor=base west] {\large{}*};
+\path (3.96875,3.81) node[text=black,anchor=base west] {\large{}*};
+\path (3.96875,4.445) node[text=black,anchor=base west] {\large{}*};
+\path (4.60375,4.445) node[text=black,anchor=base west] {\large{}*};
+\path (4.60375,3.65125) node[text=black,anchor=base west] {\large{}*};
+\path (2.06375,1.905) node[text=black,anchor=base west] {\large{}*};
+\path (2.69875,1.905) node[text=black,anchor=base west] {\large{}*};
+\path (7.14375,2.38125) node[text=black,anchor=base west] {\large{}1};
+\path (9.68375,2.38125) node[text=black,anchor=base west] {\large{}3};
+\path (10.95375,2.38125) node[text=black,anchor=base west] {\large{}4};
+\path (12.22375,2.38125) node[text=black,anchor=base west] {\large{}5};
+\path (8.41375,2.38125) node[text=black,anchor=base west] {\large{}2};
+\path (0.9525,3.01625) node[text=black,anchor=base west] {\large{}A =};
+
+\end{tikzpicture}%
