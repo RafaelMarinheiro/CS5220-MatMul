@@ -46,7 +46,7 @@
   + \\
   Locality and parallelism in simulations I}
 
-\author[]{David Bindel} \date[]{4 Feb 2014}
+\author[]{David Bindel} \date[]{6 Feb 2014}
 
 
 \begin{document}
@@ -62,6 +62,7 @@
   \begin{itemize}
   \item HW 1 in teams of 2--4.  Due next Friday!
     \begin{itemize}
+    \item CMS entry for team formation -- enter teams by Monday
     \item Please start early!
     \end{itemize}
   \item I will be out next Thurs, Feb 13
@@ -170,6 +171,9 @@
 \begin{frame}
   \frametitle{Shared memory programming model}
   
+  \begin{center}
+    \input{lec05smmodel.tikz}
+  \end{center}
   Program consists of {\em threads} of control.
   \begin{itemize}
   \item Can be created dynamically
@@ -250,12 +254,12 @@
   \frametitle{Shared memory with barriers}
   
   \begin{itemize}
-  \item Lots of scientific codes have distinct phases (e.g. time steps)
+  \item Many codes have phases (e.g. time steps)
   \item Communication only needed at end of phases
   \item Idea: synchronize on end of phase with {\em barrier}
     \begin{itemize}
     \item More restrictive (less efficient?) than small locks
-    \item But much easier to think through!  (e.g. less chance of deadlocks)
+    \item Easier to think through!  (e.g. less chance of deadlocks)
     \end{itemize}
   \item Sometimes called {\em bulk synchronous programming}
   \end{itemize}
@@ -284,9 +288,15 @@
   
   \begin{itemize}
   \item May have more threads than processors!
-    Switch threads on long latency ops.
-  \item Called {\em hyperthreading} by Intel
-  \item Cray MTA was an extreme example
+  \item Can switch threads on long latency ops
+    \begin{itemize}
+    \item Cray MTA was an extreme example
+    \end{itemize}
+  \item Similar to {\em hyperthreading}
+    \begin{itemize}
+    \item But hyperthreading doesn't switch -- just schedules multiple
+      threads onto same CPU functional units
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -307,6 +317,9 @@
 \begin{frame}
   \frametitle{Message-passing programming model}
 
+  \begin{center}
+    \input{lec05mpmodel.tikz}
+  \end{center}
   \begin{itemize}
   \item Collection of named processes
   \item Data is {\em partitioned}
@@ -489,6 +502,8 @@
 
 \end{frame}
 
+\end{document}
+% This is as far as we actually got
 
 \begin{frame}
   \frametitle{Discrete events}

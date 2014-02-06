@@ -1,0 +1,15 @@
+\begin{tikzpicture}[y=-1cm]
+
+% objects at depth 50:
+\draw[black,fill=blue] (2.54,3.96875) rectangle (4.92125,5.3975);
+\draw[black,fill=green] (6.82625,3.96875) rectangle (9.2075,5.3975);
+\draw[black,fill=orange] (6.82625,1.42875) rectangle (9.2075,2.8575);
+\draw[black,fill=cyan] (2.54,1.42875) rectangle (4.92125,2.8575);
+\draw[black] (4.92125,2.06375) -- (6.82625,2.06375);
+\draw[black] (4.92125,4.60375) -- (6.82625,4.60375);
+\draw[black] (3.65125,2.8575) -- (3.65125,3.96875);
+\draw[black] (7.9375,2.8575) -- (7.9375,3.96875);
+\draw[black] (4.92125,2.8575) -- (6.82625,3.96875);
+\draw[black] (4.92125,3.96875) -- (6.82625,2.8575);
+
+\end{tikzpicture}%

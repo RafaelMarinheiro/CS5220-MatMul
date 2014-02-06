@@ -1,0 +1,17 @@
+\begin{tikzpicture}[y=-1cm,scale=0.6]
+
+% objects at depth 50:
+\draw[rounded corners=6.3bp,black] (8.41375,1.42875) rectangle (1.42875,0.3175);
+\draw[rounded corners=6.3bp,black] (2.8575,4.28625) rectangle (1.905,3.65125);
+\draw[rounded corners=6.3bp,black] (4.7625,4.28625) rectangle (3.81,3.65125);
+\draw[rounded corners=6.3bp,black] (6.6675,4.28625) rectangle (5.715,3.65125);
+\draw[rounded corners=6.3bp,black] (8.41375,4.28625) rectangle (7.46125,3.65125);
+\draw[black] (7.62,1.905) -- (7.9375,2.38125) -- (7.62,2.8575) -- (7.9375,3.33375);
+\draw[black] (6.0325,1.905) -- (6.35,2.38125) -- (6.0325,2.8575) -- (6.35,3.33375);
+\draw[black] (4.1275,1.905) -- (4.445,2.38125) -- (4.1275,2.8575) -- (4.445,3.33375);
+\draw[black] (2.2225,1.905) -- (2.54,2.38125) -- (2.2225,2.8575) -- (2.54,3.33375);
+\path (9.68375,2.54) node[text=black,anchor=base west] {\large{}Threads};
+\path (9.68375,0.9525) node[text=black,anchor=base west] {\large{}Shared memory};
+\path (9.68375,4.1275) node[text=black,anchor=base west] {\large{}Thread-local storage};
+
+\end{tikzpicture}%
