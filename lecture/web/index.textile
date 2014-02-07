@@ -13,7 +13,7 @@ table(table).
 {background:#eee}.|2       |  1/28  | "Getting started on C4":lectures/lec02.pdf |
 {background:#eee}.|3       |  1/30  | "Computer architecture basics":lectures/lec03.pdf  |
 |4       |  2/4   | "Intro to parallel machines and models":lectures/lec04.pdf  |
-|5       |  2/6   |                               |
+|5       |  2/6   | "Intro to parallel machines and models":lectures/lec05.pdf  |
 {background:#eee}.|6       |  2/11  |                               |
 {background:#eee}.|7       |  2/13  |                               |
 |        |  2/18  | **February Break**            |
