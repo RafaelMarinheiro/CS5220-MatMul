@@ -157,13 +157,18 @@ also provide the file name as an argument, i.e.
 The Makefile has targets for running the timer on the instructional nodes
 on C4 using the `runner.sh` script.  For example,
 
-    make timing-blocked.csv
+    make info-blocked.out
 
-on C4 will submit an HTCondor job to produce the timing-blocked.csv file.
-Note that the `runner.sh` script does a little more than just running the
-job; it also reports what host the job ran on, saves the standard output
-to `info-XXX.out`, and sets the `OMP_NUM_THREADS` variable so that runs
-using OpenBLAS don't get an unfair advantage by exploiting multiple cores.
+on C4 will submit an HTCondor job to produce the timing-blocked.csv
+file (and info-blocked.out).  To run all the timers, you can use
+
+    make run-c4
+
+Note that the `runner.sh` script does a little more than just running
+the job; it also reports what host the job ran on, saves the standard
+output to `info-XXX.out`, and sets the `OMP_NUM_THREADS` variable so
+that runs using OpenBLAS don't get an unfair advantage by exploiting
+multiple cores.
 
 ## Plotting results
 
