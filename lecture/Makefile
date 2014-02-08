@@ -1,4 +1,4 @@
-SLIDES = lec01.pdf lec02.pdf lec03.pdf lec04.pdf lec05.pdf
+SLIDES = lec01.pdf lec02.pdf lec03.pdf lec04.pdf lec05.pdf lec06.pdf
 
 export TEXINPUTS := .:figs:$(TEXINPUTS):
 

@@ -14,10 +14,10 @@ table(table).
 {background:#eee}.|3       |  1/30  | "Computer architecture basics":lectures/lec03.pdf  |
 |4       |  2/4   | "Intro to parallel machines and models":lectures/lec04.pdf  |
 |5       |  2/6   | "Intro to parallel machines and models":lectures/lec05.pdf  |
-{background:#eee}.|6       |  2/11  |                               |
-{background:#eee}.|7       |  2/13  |                               |
+{background:#eee}.|6       |  2/11  | "Parallelism and locality in simulations I":lectures/lec06.pdf |
+{background:#eee}.|7       |  2/13  | Guest lecture: Prof. Ken Birman |
 |        |  2/18  | **February Break**            |
-|8       |  2/20  |                               |
+|8       |  2/20  | Parallelism and locality in simulations II |
 {background:#eee}.|9       |  2/25  |                               |
 {background:#eee}.|10      |  2/27  |                               |
 |11      |  3/4   |                               |
