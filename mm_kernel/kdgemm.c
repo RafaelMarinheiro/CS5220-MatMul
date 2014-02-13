@@ -72,7 +72,7 @@ void kdgemm(double * restrict C,
         __m128d to0 = _mm_mul_pd(a0, bs0);
 
         __m128d a1 = _mm_load_pd(A+2*k+2);
-        cd = _mm_add_pd(cd, td0);
+        co = _mm_add_pd(co, to0);
         __m128d b1 = _mm_load_pd(B+2*k+2);
         __m128d td1 = _mm_mul_pd(a1, b1);
         __m128d bs1 = swap_sse_doubles(b1);
