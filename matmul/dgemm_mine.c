@@ -1,11 +1,12 @@
 #include <string.h>
+#include "../mm_kernel/kdgemm.c"
 
 const char* dgemm_desc = "My awesome dgemm.";
 
 void square_dgemm(const int M, const double *A, const double *B, double *C)
 {
 
-    static double buffer[4*P + 4] __attribute__((aligned(16))); 
+	static double buffer[4*_MAGIC_P_ + 4 + 1000000] __attribute__((aligned(16))); 
 
 	double * tempA, * tempB, * tempC;
 	int size;
@@ -16,10 +17,14 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 		size = M*(M+1);
 	}
 
-	tempA = (double *) _mm_malloc(3*size*sizeof(double), 16);
+
+	tempA = buffer + 4*_MAGIC_P_ + 4;
+	// tempA = (double *) _mm_malloc(3*size*sizeof(double), 16);
+	// printf("%d\n", tempA);
 	tempB = tempA + size*sizeof(double);
 	tempC = tempB + size*sizeof(double);
 	
+
 	to_kdgemm_A(M, A, tempA);
 	to_kdgemm_A(M, C, tempC);
 	to_kdgemm_B(M, B, tempB);
@@ -42,29 +47,50 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 			}
 
 			posA = 0, posB = 0;
-			for(k = 0; k < ((M + P-1)/P); k++){
-				if(k*P + P <= M){
-					memcpy(buffer + 4, tempA + M*i + 2*posA, 2*P*sizeof(double));
-					memcpy(buffer + 4 + 2*P, tempB + M*j + 2*posB, 2*P*sizeof(double));
-					posA += P; 
-					posB += P;
+			for(k = 0; k < ((M + _MAGIC_P_-1)/_MAGIC_P_); k++){
+				if(k*_MAGIC_P_ + _MAGIC_P_ <= M){
+					memcpy(buffer + 4, tempA + M*i + 2*posA, 2*_MAGIC_P_*sizeof(double));
+					memcpy(buffer + 4 + 2*_MAGIC_P_, tempB + M*j + 2*posB, 2*_MAGIC_P_*sizeof(double));
+
+					posA += _MAGIC_P_; 
+					posB += _MAGIC_P_;
 
 					//chamar o kernel
-					kdgemm(buffer, buffer + 4, buffer + 4 + 2*P);
+					// for(int u = 0; u < 4*_MAGIC_P_ + 4; u++){
+					// 	printf("%.0lf ", buffer[u]);
+					// }
+					// printf("\n");
+			
+					kdgemm(buffer, buffer + 4, buffer + 4 + 2*_MAGIC_P_);
 				} else{
-					blockSize = M - k*P;
+					blockSize = M - k*_MAGIC_P_;
 					memcpy(buffer + 4, tempA + M*i + 2*posA, 2*blockSize*sizeof(double));
-					memset(buffer + 4 + 2*blockSize, 0, 2*(M-blockSize)*sizeof(double));
+					memset(buffer + 4 + 2*blockSize, 0, 2*(_MAGIC_P_-blockSize)*sizeof(double));
+					// for(int u = 0; u < 2*(M-blockSize); u++){
+					// 	buffer[4+2*blockSize + u] = 0;
+					// }
 
-					memcpy(buffer + 4 + 2*P, tempB + M*j + 2*posB, 2*blockSize*sizeof(double));
-					memset(buffer + 4 + 2*P + 2*blockSize, 0, 2*(M-blockSize)*sizeof(double));
+					memcpy(buffer + 4 + 2*_MAGIC_P_, tempB + M*j + 2*posB, 2*blockSize*sizeof(double));
+					memset(buffer + 4 + 2*_MAGIC_P_ + 2*blockSize, 0, 2*(_MAGIC_P_-blockSize)*sizeof(double));
+					// for(int u = 0; u < 2*(M-blockSize); u++){
+					// 	buffer[4+2*blockSize + 2*_MAGIC_P_ + u] = 0;
+					// }
 
 					posA += blockSize;
 					posB += blockSize;
-
+					// for(int u = 0; u < 4*_MAGIC_P_ + 4; u++){
+					// 	printf("%.0lf ", buffer[u]);
+					// }
+					// printf("\n");
+			
 					//chamar o kernel
-					kdgemm(buffer, buffer + 4, buffer + 4 + 2*P);
+					kdgemm(buffer, buffer + 4, buffer + 4 + 2*_MAGIC_P_);
 				}
+				// 	for(int u = 0; u < 4*_MAGIC_P_ + 4; u++){
+				// 	printf("%.0lf ", buffer[u]);
+				// }
+				// printf("\n");
+			
 			}
 
 			if(j + 1 < M){
@@ -83,6 +109,6 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 
 	from_kdgemm_C(M, tempC, C);
 
-	_mm_free(tempA);
+	//_mm_free(tempA);
 	    
 }

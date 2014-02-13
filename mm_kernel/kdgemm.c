@@ -4,19 +4,19 @@
  * Dimensions for a "kernel" multiply.  We use define statements in
  * order to make sure these are treated as compile-time constants
  * (which the optimizer likes)
- */
-#define M 2
-#define N 2
-#define P 10
+//  */
+// #define M 2
+// #define N 2
+ #define _MAGIC_P_ 100
 
 /*
  * The ktimer driver expects these variables to be set to whatever
  * the dimensions of a kernel multiply are.  It uses them both for
  * space allocation and for flop rate computations.
  */
-int DIM_M=M;
-int DIM_N=N;
-int DIM_P=P;
+const int DIM_M=2;
+const int DIM_N=2;
+const int DIM_P=_MAGIC_P_;
 
 
 /*
@@ -62,7 +62,7 @@ void kdgemm(double * restrict C,
      * matrix multiply into the accumulated 2-by-2 product matrix, which is
      * stored in the registers cd (diagonal part) and co (off-diagonal part).
      */
-    for (int k = 0; k < P; k += 2) {
+    for (int k = 0; k < _MAGIC_P_; k += 2) {
 
         __m128d a0 = _mm_load_pd(A+2*k+0);
         __m128d b0 = _mm_load_pd(B+2*k+0);
