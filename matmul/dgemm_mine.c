@@ -6,7 +6,7 @@ const char* dgemm_desc = "My awesome dgemm.";
 void square_dgemm(const int M, const double *A, const double *B, double *C)
 {
 
-	static double buffer[4*_MAGIC_P_ + 4 + 1000000] __attribute__((aligned(16))); 
+	static double buffer[4*_MAGIC_P_ + 4 + 2000000] __attribute__((aligned(16))); 
 
 	double * tempA, * tempB, * tempC;
 	int size;
@@ -21,8 +21,8 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 	tempA = buffer + 4*_MAGIC_P_ + 4;
 	// tempA = (double *) _mm_malloc(3*size*sizeof(double), 16);
 	// printf("%d\n", tempA);
-	tempB = tempA + size*sizeof(double);
-	tempC = tempB + size*sizeof(double);
+	tempB = tempA + size;
+	tempC = tempB + size;
 	
 
 	to_kdgemm_A(M, A, tempA);

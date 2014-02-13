@@ -125,20 +125,20 @@ int main(int argc, char** argv)
     double* C = malloc(DIM_M * DIM_N * sizeof(double));
 
     // Allocate aligned scratch space for use by the kernel
-    double* Ak = _mm_malloc(DIM_M * DIM_P * sizeof(double), 16);
-    double* Bk = _mm_malloc(DIM_P * DIM_N * sizeof(double), 16);
-    double* Ck = _mm_malloc(DIM_M * DIM_N * sizeof(double), 16);
+    double* Ak = _mm_malloc((DIM_M * DIM_P + DIM_P * DIM_N + DIM_M * DIM_N) * sizeof(double), 16);
+    double* Bk = Ak + DIM_M*DIM_P;
+    double* Ck = Bk + DIM_P*DIM_N;
 
     // Initialize the input matrices and convert to kernel format
     matrix_init(A, DIM_M, DIM_P);
     matrix_init(B, DIM_P, DIM_N);
-    to_kdgemm_A(DIM_M, A, Ak);
-    to_kdgemm_B(DIM_P, B, Bk);
+//    to_kdgemm_A(DIM_M, A, Ak);
+//    to_kdgemm_B(DIM_P, B, Bk);
 
     // Clear the kernel scratch output, run the kernel, convert to col major
     matrix_clear(Ck, DIM_M, DIM_N);
     kdgemm(Ak, Bk, Ck);
-    from_kdgemm_C(DIM_M, Ck, C);
+//    from_kdgemm_C(DIM_M, Ck, C);
 
     // Check for agreement
     double max_diff = check_kdgemm(A, B, C);

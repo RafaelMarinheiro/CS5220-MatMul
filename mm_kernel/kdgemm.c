@@ -7,7 +7,7 @@
 //  */
 // #define M 2
 // #define N 2
- #define _MAGIC_P_ 100
+ #define _MAGIC_P_ 128
 
 /*
  * The ktimer driver expects these variables to be set to whatever
@@ -49,9 +49,9 @@ void kdgemm(double * restrict C,
                const double * restrict B)
 {
     // This is really implicit in using the aligned ops...
-    __builtin_assume_aligned(A, 16);
-    __builtin_assume_aligned(B, 16);
-    __builtin_assume_aligned(C, 16);
+    __assume_aligned(A, 16);
+    __assume_aligned(B, 16);
+    __assume_aligned(C, 16);
 
     // Load diagonal and off-diagonals
     __m128d cd = _mm_load_pd(C+0);
@@ -68,19 +68,19 @@ void kdgemm(double * restrict C,
         __m128d b0 = _mm_load_pd(B+2*k+0);
         __m128d td0 = _mm_mul_pd(a0, b0);
         __m128d bs0 = swap_sse_doubles(b0);
+        cd = _mm_add_pd(cd, td0);
         __m128d to0 = _mm_mul_pd(a0, bs0);
 
         __m128d a1 = _mm_load_pd(A+2*k+2);
+        cd = _mm_add_pd(cd, td0);
         __m128d b1 = _mm_load_pd(B+2*k+2);
         __m128d td1 = _mm_mul_pd(a1, b1);
         __m128d bs1 = swap_sse_doubles(b1);
+        cd = _mm_add_pd(cd, td1);
         __m128d to1 = _mm_mul_pd(a1, bs1);
 
-        __m128d td_sum = _mm_add_pd(td0, td1);
-        __m128d to_sum = _mm_add_pd(to0, to1);
 
-        cd = _mm_add_pd(cd, td_sum);
-        co = _mm_add_pd(co, to_sum);
+        co = _mm_add_pd(co, to1);
     }
 
     // Write back sum
