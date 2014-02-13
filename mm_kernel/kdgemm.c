@@ -137,40 +137,40 @@ void to_kdgemm_A(int ldA, const double* restrict A, double * restrict Ak)
     }
 }
 
-void to_kdgemm_B(int ldB, const double* restrict B, double * restrict Bk)
+void from_kdgemm_C(int ldC, const double* restrict Ck, double * restrict C)
 {
     int i=0, j=0, pos = 0;
 
-    for(i = 0; i < ldB; i+= 2){
-        if(i+1 < ldB){
-            for(j = 0; j < ldB; j++){
-                B[i + j*ldB] = Bk[pos];
-                B[i + j*ldB + 1] = Bk[pos+1];
+    for(i = 0; i < ldC; i+= 2){
+        if(i+1 < ldC){
+            for(j = 0; j < ldC; j++){
+                C[i + j*ldC] = Ck[pos];
+                C[i + j*ldC + 1] = Ck[pos+1];
                 pos += 2;  
             }
         } else {
-            for(j = 0; j < ldB; j++){
-                B[i + j*ldB] = Bk[pos];
+            for(j = 0; j < ldC; j++){
+                C[i + j*ldC] = Ck[pos];
                 pos += 2;
             }
         }
     }
 }
 
-void from_kdgemm_C(int ldC, const double* restrict Ck, double * restrict C)
+void to_kdgemm_B(int ldB, const double* restrict B, double * restrict Bk)
 {
     int i=0, j=0, pos=0;
-    for(j = 0; j < ldC; j += 2){
-        if(j+1 < ldC){
-            for(i = 0; i < ldC; i++){
-                C[pos] = C[i + j*ldC];
-                C[pos+1] = C[i + j*ldC + ldC];
+    for(j = 0; j < ldB; j += 2){
+        if(j+1 < ldB){
+            for(i = 0; i < ldB; i++){
+                Bk[pos] = B[i + j*ldB];
+                Bk[pos+1] = B[i + j*ldB + ldB];
                 pos += 2;
             }
         } else{
-            for(i = 0; i < ldC; i++){
-                C[pos] = C[i + j*ldC];
-                C[pos+1] = 0;
+            for(i = 0; i < ldB; i++){
+                Bk[pos] = B[i + j*ldB];
+                Bk[pos+1] = 0;
                 pos += 2;
             }
         }
