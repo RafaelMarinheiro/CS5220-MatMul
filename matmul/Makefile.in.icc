@@ -4,8 +4,8 @@ FC=ifort
 
 # Compiler optimization flags.  You will definitely want to play with these!
 OPTFLAGS = -O3
-CFLAGS = -std=gnu99 
-FFLAGS = 
+CFLAGS = -std=gnu99
+FFLAGS = -profile-functions -profile-loops=all -profile-loops-report=2
 LDFLAGS = -fopenmp -nofor-main
 
 # Add -DDEBUG_RUN to CPPFLAGS to cut down on the cases.

@@ -9,9 +9,9 @@ PLATFORM=gcc
 include Makefile.in.$(PLATFORM)
 
 .PHONY:	all
-all:	matmul-mine matmul-basic matmul-blocked matmul-blas matmul-f2c
+all:	matmul-mine matmul-basic matmul-blocked matmul-blas matmul-f2c matmul-test matmul-tune matmul-agora
 
-local: matmul-mine matmul-basic matmul-blocked matmul-f2c
+local: matmul-mine matmul-basic matmul-blocked matmul-f2c matmul-test
 
 
 # ---
@@ -46,7 +46,7 @@ dgemm_blas.o: dgemm_blas.c
 
 .PHONY: run run-c4
 run-c4: info-mine.out info-basic.out info-blocked.out \
-	info-f2c.out info-blas.out
+	info-f2c.out info-blas.out info-test.out info-tune.out info-agora.out
 run:    timing-mine.csv timing-basic.csv timing-blocked.csv \
 	timing-f2c.csv timing-blas.csv
 

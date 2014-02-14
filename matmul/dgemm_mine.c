@@ -5,7 +5,6 @@ const char* dgemm_desc = "My awesome dgemm.";
 
 void square_dgemm(const int M, const double *A, const double *B, double *C)
 {
-
 	static double buffer[4*_MAGIC_P_ + 4] __attribute__((aligned(16))); 
 
 	double * tempA, * tempB, * tempC;
@@ -93,6 +92,6 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 
 	from_kdgemm_C(M, tempC, C);
 
-	//_mm_free(tempA);
+	_mm_free(tempA);
 	    
 }
