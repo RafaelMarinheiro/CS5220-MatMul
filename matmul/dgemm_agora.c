@@ -37,6 +37,7 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 	pC = tempC;
 	for(k = 0; k < ((M + _MAGIC_P_-1)/_MAGIC_P_); k++){			
 		int blockSize = M - k*_MAGIC_P_;
+		posB = k*_MAGIC_P_*M;
 		for(i = 0; i < M; i += 2){
 			if(k*_MAGIC_P_ + _MAGIC_P_ <= M){
 				memcpy(startA, tempA + M*i + 2*k*_MAGIC_P_, 2*_MAGIC_P_*sizeof(double));
@@ -58,9 +59,9 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 					buffer[3] = tempC[M*i + 2*j + 1];	
 				}
 				if(k*_MAGIC_P_ + _MAGIC_P_ <= M){
-					memcpy(startB, tempB + M*j + 2*k*_MAGIC_P_, 2*_MAGIC_P_*sizeof(double));
+					memcpy(startB, tempB + posB + 2*j*_MAGIC_P_, 2*_MAGIC_P_*sizeof(double));
 				} else{
-					memcpy(startB, tempB + M*j + 2*k*_MAGIC_P_, 2*blockSize*sizeof(double));
+					memcpy(startB, tempB + M*j + 2*j*_MAGIC_P_, 2*blockSize*sizeof(double));
 					memset(startB+2*blockSize, 0, 2*(_MAGIC_P_-blockSize)*sizeof(double));
 				}
 				kdgemm(buffer, startA, startB);

@@ -7,7 +7,7 @@
 //  */
 // #define M 2
 // #define N 2
- #define _MAGIC_P_ 128
+ #define _MAGIC_P_ 4
 
 /*
  * The ktimer driver expects these variables to be set to whatever
@@ -160,18 +160,41 @@ void from_kdgemm_C(int ldC, const double* restrict Ck, double * restrict C)
 void to_kdgemm_B(int ldB, const double* restrict B, double * restrict Bk)
 {
     int i=0, j=0, pos=0;
-    for(j = 0; j < ldB; j += 2){
-        if(j+1 < ldB){
-            for(i = 0; i < ldB; i++){
-                Bk[pos] = B[i + j*ldB];
-                Bk[pos+1] = B[i + j*ldB + ldB];
-                pos += 2;
+    int k=0;
+    int blocks = (ldB + _MAGIC_P_ - 1)/_MAGIC_P_;
+    for(k = 0; k < blocks; k++){
+        if(k*_MAGIC_P_ + _MAGIC_P_ <= ldB){
+            for(j = 0; j < ldB; j += 2){
+                if(j+1 < ldB){
+                    for(i = 0; i < _MAGIC_P_; i++){
+                        Bk[pos] = B[i + j*ldB + k*_MAGIC_P_];
+                        Bk[pos+1] = B[i + j*ldB + ldB + k*_MAGIC_P_];
+                        pos += 2;
+                    }
+                } else{
+                    for(i = 0; i < _MAGIC_P_; i++){
+                        Bk[pos] = B[i + j*ldB + k*_MAGIC_P_];
+                        Bk[pos+1] = 0;
+                        pos += 2;
+                    }
+                }
             }
         } else{
-            for(i = 0; i < ldB; i++){
-                Bk[pos] = B[i + j*ldB];
-                Bk[pos+1] = 0;
-                pos += 2;
+            int rest = ldB - k*_MAGIC_P_;
+            for(j = 0; j < ldB; j += 2){
+                if(j+1 < ldB){
+                    for(i = 0; i < rest; i++){
+                        Bk[pos] = B[i + j*ldB + k*_MAGIC_P_];
+                        Bk[pos+1] = B[i + j*ldB + ldB + k*_MAGIC_P_];
+                        pos += 2;
+                    }
+                } else{
+                    for(i = 0; i < rest; i++){
+                        Bk[pos] = B[i + j*ldB + k*_MAGIC_P_];
+                        Bk[pos+1] = 0;
+                        pos += 2;
+                    }
+                }
             }
         }
     }
