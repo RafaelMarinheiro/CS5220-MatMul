@@ -63,12 +63,20 @@ void square_dgemm(const int M, const double *A, const double *B, double *C)
 					buffer[3] = tempC[M*i + 2*j + 1];	
 				}
 				if(k*_MAGIC_P_ + _MAGIC_P_ <= M){
-					memcpy(startB, tempB + posB + 2*tB, 2*_MAGIC_P_*sizeof(double));
-					tB += _MAGIC_P_;
+					memcpy(startB, tempB + posB + tB, 2*_MAGIC_P_*sizeof(double));
+					tB += 2*_MAGIC_P_;
+//					for(int i = 0; i < 2*_MAGIC_P_; i++){
+//						printf("%.0lf ", startB[i]);
+//					}
+//					printf("\n");
 				} else{
-					memcpy(startB, tempB + posB + 2*tB, 2*blockSize*sizeof(double));
+					memcpy(startB, tempB + posB + tB, 2*blockSize*sizeof(double));
 					memset(startB+2*blockSize, 0, 2*(_MAGIC_P_-blockSize)*sizeof(double));
-					tB += _MAGIC_P_-blockSize;
+//					for(int i = 0; i < 2*_MAGIC_P_; i++){
+//						printf("%.0lf ", startB[i]);
+//					}
+//					printf("\n");
+					tB += 2*(blockSize);
 				}
 				kdgemm(buffer, startA, startB);
 				if(j+1 < M){

@@ -7,7 +7,7 @@
 //  */
 // #define M 2
 // #define N 2
- #define _MAGIC_P_ 4
+ #define _MAGIC_P_ 128
 
 /*
  * The ktimer driver expects these variables to be set to whatever
@@ -43,6 +43,7 @@ const int DIM_P=_MAGIC_P_;
  *       (diagonals stored first, then off-diagonals)
  */
 
+#define _R_REG_ register
 
 void kdgemm(double * restrict C,
                const double * restrict A,
@@ -54,8 +55,8 @@ void kdgemm(double * restrict C,
     __assume_aligned(C, 16);
 
     // Load diagonal and off-diagonals
-    __m128d cd = _mm_load_pd(C+0);
-    __m128d co = _mm_load_pd(C+2);
+    _R_REG_ __m128d cd = _mm_load_pd(C+0);
+    _R_REG_ __m128d co = _mm_load_pd(C+2);
 
     /*
      * Do block dot product.  Each iteration adds the result of a two-by-two
@@ -64,20 +65,20 @@ void kdgemm(double * restrict C,
      */
     for (int k = 0; k < _MAGIC_P_; k += 2) {
 
-        __m128d a0 = _mm_load_pd(A+2*k+0);
-        __m128d b0 = _mm_load_pd(B+2*k+0);
-        __m128d td0 = _mm_mul_pd(a0, b0);
-        __m128d bs0 = swap_sse_doubles(b0);
+        _R_REG_ __m128d a0 = _mm_load_pd(A+2*k+0);
+        _R_REG_ __m128d b0 = _mm_load_pd(B+2*k+0);
+        _R_REG_ __m128d td0 = _mm_mul_pd(a0, b0);
+        _R_REG_ __m128d bs0 = swap_sse_doubles(b0);
         cd = _mm_add_pd(cd, td0);
-        __m128d to0 = _mm_mul_pd(a0, bs0);
+        _R_REG_ __m128d to0 = _mm_mul_pd(a0, bs0);
 
-        __m128d a1 = _mm_load_pd(A+2*k+2);
+        _R_REG_ __m128d a1 = _mm_load_pd(A+2*k+2);
         co = _mm_add_pd(co, to0);
-        __m128d b1 = _mm_load_pd(B+2*k+2);
-        __m128d td1 = _mm_mul_pd(a1, b1);
-        __m128d bs1 = swap_sse_doubles(b1);
+        _R_REG_ __m128d b1 = _mm_load_pd(B+2*k+2);
+        _R_REG_ __m128d td1 = _mm_mul_pd(a1, b1);
+        _R_REG_ __m128d bs1 = swap_sse_doubles(b1);
         cd = _mm_add_pd(cd, td1);
-        __m128d to1 = _mm_mul_pd(a1, bs1);
+        _R_REG_ __m128d to1 = _mm_mul_pd(a1, bs1);
 
 
         co = _mm_add_pd(co, to1);
